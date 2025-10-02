@@ -20,7 +20,7 @@ const Signup: React.FC = () => {
     //@ts-ignore
     console.log(emailRef.current?.value + passwordRef.current?.value)
 
-    const response= await axios.post('http://localhost:3000/api/v1/user/signup',{
+    const response= await axios.post('https://paytm-backend-2ar9.onrender.com/api/v1/user/signup',{
                 email:emailRef.current?.value,
                 password:passwordRef.current?.value,
                 username:usernameRef.current?.value

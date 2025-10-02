@@ -17,7 +17,7 @@ const SendMoney: React.FC = () => {
       alert("Please fill in all fields.");
       return;
     }
-    const success=await axios.post('http://localhost:3000/api/v1/accounts/transfer',{
+    const success=await axios.post('https://paytm-backend-2ar9.onrender.com/api/v1/accounts/transfer',{
         amount:amountRef.current.value,
         to:accountRef.current.value
     },{

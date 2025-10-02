@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     const token = localStorage.getItem("token")
     console.log(token)
     async function fetchData(){
-     const res = await axios.get('http://localhost:3000/api/v1/user/details',{
+     const res = await axios.get('https://paytm-backend-2ar9.onrender.com/api/v1/user/details',{
         headers:{
           authorization:localStorage.getItem("token")
         }
@@ -82,19 +82,26 @@ const Dashboard: React.FC = () => {
         <div className="space-y-4">
   {users.map((user) => (
     <div
+    //@ts-ignore
       key={user.accountNumber} // unique key
       className="bg-white shadow-sm rounded-xl p-4 flex justify-between items-center hover:shadow-md transition"
     >
       <div className="flex items-center space-x-3">
         {/* Avatar with first letter of username */}
         <div className="bg-blue-100 text-blue-600 rounded-full w-10 h-10 flex items-center justify-center font-bold">
-          {user.username.charAt(0).toUpperCase()}
+          {//@ts-ignore
+    user.username.charAt(0).toUpperCase()}
         </div>
 
         {/* Show username and account number */}
         <div>
-          <span className="block font-medium text-gray-700">{user.username}</span>
-          <span className="text-sm text-gray-500">Acct: {user.accountNumber}</span>
+          
+          <span className="block font-medium text-gray-700">{
+    //@ts-ignore
+    user.username}</span>
+          <span className="text-sm text-gray-500">Acct: {
+    //@ts-ignore
+    user.accountNumber}</span>
         </div>
       </div>
 

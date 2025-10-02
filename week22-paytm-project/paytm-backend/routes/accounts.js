@@ -31,8 +31,9 @@ router.post('/transfer',authMiddleware,async(req,res)=>{
         }
     })
     const accountFrom=data.accountNumber;
-    const accountTo=req.body.to;
-    const amount = req.body.amount;
+    const accountTo=Number(req.body.to);
+    const amount = Number(req.body.amount);
+    console.log(amount + " to " + accountTo)
 
     const success =await prisma.$transaction(async(tx)=>{
         const user1=await prisma.account.findUnique({where:{accountNumber:accountFrom}});
@@ -65,8 +66,9 @@ router.post('/transfer',authMiddleware,async(req,res)=>{
         })
     })
 
+    console.log(success)
     res.json({
-        message:"transfer successfulle "
+        msg:"successfull "
     })
 
 })

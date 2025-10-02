@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 
 const userSchema = z.object({
     email:z.email().min(7),
-    username:z.string().max(10).min(5),
+    username:z.string().min(5),
     password:z.string().min(8)
 })
 
@@ -80,7 +80,7 @@ router.post('/signup',async(req,res)=>{
             token:token
         })
     }catch(err){
-        console.log(err);
+        // console.log(err);
         res.status(404).json({
             message:"Something went wrong "
         })
@@ -92,7 +92,7 @@ router.post('/signin', async(req,res)=>{
     try{
 
         const data=atSign.parse(req.body);
-        console.log(data)
+        // console.log(data)
         if(!data){
             res.json({
                 message:"incorrect credentials pls chk and try again"
@@ -133,11 +133,31 @@ router.post('/signin', async(req,res)=>{
 })
 
 
-router.get("/details", authMiddleware,(req,res)=>{
+router.get("/details", authMiddleware,async(req,res)=>{
     // console.log("hellow");
     const id=req.id;
+    const response = await prisma.user.findUnique({
+        where:{
+            id:id
+        }
+    })
+    // console.log(response)
+    const account = await prisma.account.findUnique({
+        where:{
+            accountNumber:response.accountNumber
+        }
+    })
+    const allUser=await prisma.user.findMany({
+        select:{
+            username:true,
+            accountNumber:true
+        }
+    })
     res.json({
-        messgae:req.id
+        username:response.username,
+        accountNumber:response.accountNumber,
+        balance:account.balance,
+        allUser:allUser
     })
 })
 

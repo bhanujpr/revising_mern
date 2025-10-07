@@ -76,6 +76,7 @@ app.post("/signin", async (req, res) => {
 
   if (isValidUser) {
     const token = jwt.sign(isValidUser.id, JWT_SECRET);
+    console.log(token)
     res.json({
       message: "You are logged in ",
       token: token,

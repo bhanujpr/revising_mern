@@ -8,6 +8,7 @@ import InputComponent from "./InputComponent";
 import Button from "./Button";
 import Link from "next/link";
 import axios from "axios";
+import { error } from "console";
 
 function AuthPage({
   mainHeading,
@@ -34,47 +35,61 @@ function AuthPage({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (compo === "signup") {
+      if (passwordRef.current?.value !== repeatPasswordRef.current?.value) {
+        alert("Passwords do not match!");
+        return;
+      }
 
-    if(compo==="signup"){
+      try {
+        const email = emailRef.current?.value;
+        const name = nameRef.current?.value;
+        const username = usernameRef.current?.value;
+        const password = passwordRef.current?.value;
 
-        if (passwordRef.current?.value !== repeatPasswordRef.current?.value) {
-            alert("Passwords do not match!");
-            return;
+        console.log(email);
+
+        const response = await axios.post("http://localhost:3001/signup", {
+          email: email,
+          username: username,
+          password: password,
+          name: name,
+          photo: "update Soon",
+        });
+        if (response.status === 200) {
+          alert("Account created Successfully");
+          console.log(response);
+          router.push("/signin");
+          return;
+        } else {
+          console.log(response);
+          return;
         }
-        
-        try {
-            const email = emailRef.current?.value;
-            const name = nameRef.current?.value;
-            const username=usernameRef.current?.value;
-            const password=passwordRef.current?.value;
-
-            console.log(email)
-
-
-
-            const response = await axios.post("http://localhost:3001/signup",{
-                    email:email,
-                    username:username,
-                    password:password,
-                    name:name,
-                    photo:"update Soon"
-            })
-            if(response.status===200){
-                alert("Account created Successfully");
-                console.log(response)
-                // router.push('/signin');
-            }
-            else{
-                console.log(response);
-            }
-        } catch (error) {
-            console.log(error)
-            alert("Signup failed! Please try again or use a different email.");
-        }
+      } catch (error) {
+        console.log(error);
+        alert("Signup failed! Please try again or use a different email.");
+        return;
+      }
     }
 
-    else{
-        console.log("in signin")
+    try {
+      const username = usernameRef.current?.value;
+      const password = passwordRef.current?.value;
+      console.log(username);
+      const response = await axios.post("http://localhost:3001/signin", {
+        username: username,
+        password: password,
+      });
+
+      if (response.status === 200) {
+        localStorage.setItem("token",response.data.token)
+        alert("Logged in");
+        router.push("/");
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -87,12 +102,14 @@ function AuthPage({
           <p className="text-gray-500 mb-6">{secondaryHeading}</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <InputComponent
-              type="email"
-              text="Email Address"
-              placeholder="Enter your email address"
-              reference={emailRef}
-            />
+            {compo === "signup" && (
+              <InputComponent
+                type="email"
+                text="Email Address"
+                placeholder="Enter your email address"
+                reference={emailRef}
+              />
+            )}
             {compo === "signup" && (
               <InputComponent
                 type="text"
@@ -101,14 +118,12 @@ function AuthPage({
                 reference={nameRef}
               />
             )}
-            {compo === "signup" && (
-              <InputComponent
-                type="text"
-                text="username"
-                placeholder="Enter username"
-                reference={usernameRef}
-              />
-            )}
+            <InputComponent
+              type="text"
+              text="username"
+              placeholder="Enter username"
+              reference={usernameRef}
+            />
             <InputComponent
               type="password"
               text="Password"

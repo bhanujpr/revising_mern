@@ -16,6 +16,7 @@ const users:user[]=[];
 
 
 wss.on('connection',function(ws,request){
+    console.log("connected")
 
     const url = request.url;
     if(!url){
@@ -40,12 +41,13 @@ wss.on('connection',function(ws,request){
 
     ws.on('message',async function message(data){
         const parsedData= JSON.parse(data as unknown as string);
+        console.log(parsedData)
         const response = await prismaClient.room.findUnique({
             where:{
-                slug:parsedData.roomId
+                id:Number(parsedData.roomId)
             }
         })
-        console.log(response , decoded)
+        // console.log(response , decoded)
         const id = response?.id
         if(parsedData.type === "join_room"){
             //@ts-ignore
@@ -71,7 +73,7 @@ wss.on('connection',function(ws,request){
                 //@ts-ignore
                 data:{
                     roomId:id,
-                    mesage:message,
+                    message:message,
                     userId:decoded.toString()
                 }
             })

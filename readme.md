@@ -104,7 +104,38 @@ This repository is my personal journey of revising and mastering the **MERN stac
 * Real-time communication with Socket.IO / WebSocket APIs.
 * Building a simple chat server and client.
 * Rooms, broadcasting, and handling presence.
+ 
 
+
+## 🗓️ Week 17 – Postgres & SQL Databases
+- Explored **PostgreSQL** and relational database concepts.
+- Learned about tables, primary keys, and relationships.
+- Practiced writing **SQL queries**: `SELECT`, `INSERT`, `UPDATE`, and `DELETE`.
+- Connected a Node.js backend with a Postgres database using **pg** library.
+
+---
+
+## 🗓️ Week 18 – Prisma & ORMs
+- Introduced to **ORM (Object Relational Mapping)** and how Prisma simplifies DB operations.
+- Learned Prisma schema modeling and migrations.
+- Connected Prisma to a Postgres database.
+- Performed CRUD operations through Prisma Client.
+
+---
+
+## 🗓️ Week 19 – Next.js
+- Started learning **Next.js** for full-stack React development.
+- Understood file-based routing and API routes.
+- Learned about **SSR (Server-Side Rendering)** and **SSG (Static Site Generation)**.
+- Built simple pages using `getServerSideProps` and `getStaticProps`.
+
+---
+
+## 🗓️ Week 20 – Next.js (Advanced)
+- Continued working with **Next.js** and integrated backend APIs.
+- Used environment variables and dynamic routes.
+- Implemented client-side data fetching using **SWR** and `fetch()`.
+- Deployed a sample Next.js project to **Vercel**.
 ---
 
 ## 🛠️ Tech Stack Covered
